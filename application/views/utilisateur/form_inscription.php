@@ -1,7 +1,7 @@
 <h1>Créer votre compte M-OKAPI</h1>
-<form method="post" action="<?php echo site_url('utilisateur/nouvel_utilisateur') ?>">
+<form method="post" action="<?php echo site_url('Form_valide/verification') /*utilisateur/nouvel_utilisateur*/?>">
     Nom complet:
-    <input name="nomcomplet" /><br/>
+    <input name="nomcomplet" /><?php echo set_value('nomcomplet'); ?><br/>
     Email:
     <input name="email" /><br/>
     Login:
