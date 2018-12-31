@@ -90,4 +90,9 @@ class Utilisateur extends CI_Controller
     {
         $this->load->view('utilisateur/menu');
     }
+
+    public function exercices_budgetaire()
+    {
+        $this->load->view('exercices/nouv_exercices');
+    }
 }
