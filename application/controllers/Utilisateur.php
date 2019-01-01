@@ -106,6 +106,11 @@ class Utilisateur extends CI_Controller
         $this->load->view('utilisateur/cont_parametre');
     }
 
+    public function categorie_entree()
+    {
+        $this->load->view('categorie entree/new_entree');
+    }
+
     public function creation_exercicesB()
     {
         $budget = $this->input->post('budgetI');
@@ -125,5 +130,24 @@ class Utilisateur extends CI_Controller
             $this->UtilisateurModel->nouvel_exercice($data);
         
             $this->load->view('exercices/success');
+    }
+
+    public function nouvelle_categorie_entree()
+    {
+        $nom = $this->input->post('nom');
+        $montant = $this->input->post('montant');
+        $dtcreation = $this->input->post('dtcreation');
+
+        $data = array(
+            'id_utilisateur' => $this->session->id,
+            'nom' => $nom,
+            'montant' => $montant,
+            'date_entree' => $dtcreation
+        );
+
+        $this->load->model('UtilisateurModel');
+        $this->UtilisateurModel->nouvelle_categorie_entree($data);
+
+        $this->load->view('categorie entree/success');
     }
 }

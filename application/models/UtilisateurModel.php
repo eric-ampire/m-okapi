@@ -5,6 +5,7 @@ class UtilisateurModel extends CI_Model
 {
     public $table = 'utilisateur';
     public $nouvel_ex = 'exercice_budgetaire';
+    public $nouvelle_categorie_entree = 'entree';
 
     public function creer_utilisateur($infos)
     {
@@ -29,5 +30,10 @@ class UtilisateurModel extends CI_Model
         $q = $this->db->simple_query('SELECT budget_initial FROM exercice_budgetaire WHERE id = $identifiant' );
         $res = $q->result();
         return  $res;
+    }
+
+    public function nouvelle_categorie_entree($data)
+    {
+        $this->db->insert($this->nouvelle_categorie_entree, $data);
     }
 }
