@@ -2,6 +2,6 @@
 <h3>Parametre budgetaire</h3>
 <p>
     <a href="<?php echo site_url('utilisateur/categorie_entree'); ?>">Nouvelle categorie d'entree</a></br>
-    <a href="">Nouvelle categorie de sortie</a></br>
+    <a href="<?php echo site_url('utilisateur/categorie_sortie'); ?>">Nouvelle categorie de sortie</a></br>
     <a href="<?php echo site_url('utilisateur/parametre'); ?>">Retour</a></br>
 </p>

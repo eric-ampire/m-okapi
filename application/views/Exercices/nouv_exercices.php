@@ -13,3 +13,4 @@
     <input type="date" name="dtfin"/></br>
     <input type="submit" value="creer">
 </form>
+<a href="<?php echo site_url('utilisateur/accueil'); ?>">Retour</a>
