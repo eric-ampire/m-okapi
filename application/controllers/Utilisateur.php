@@ -95,4 +95,25 @@ class Utilisateur extends CI_Controller
     {
         $this->load->view('exercices/nouv_exercices');
     }
+
+    public function creation_exercicesB()
+    {
+        $budget = $this->input->post('budgetI');
+        $dtcreation = $this->input->post('dtcreation');
+        $dtdebut = $this->input->post('dtdebut');
+        $dtfin = $this->input->post('dtfin');
+        
+        $data = array(
+            'budget_initial' => $budget,
+            'date_creation' => $dtcreation,
+            'date_debut' => $dtdebut,
+            'date_fin' => $dtfin,
+            'id_utilisateur' => $this->session->id
+        );
+        
+            $this->load->model('UtilisateurModel');
+            $this->UtilisateurModel->nouvel_exercice($data);
+        
+            $this->load->view('exercices/success');
+    }
 }

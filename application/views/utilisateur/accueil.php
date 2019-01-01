@@ -12,5 +12,5 @@
 </p>
 <h3>Exercices budgetaire en cours</h3>
 <p>
-    vobtre solde :
+    votre solde :
 </p>
