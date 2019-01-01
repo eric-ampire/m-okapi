@@ -96,6 +96,16 @@ class Utilisateur extends CI_Controller
         $this->load->view('exercices/nouv_exercices');
     }
 
+    public function parametre()
+    {
+        $this->load->view('utilisateur/parametre');
+    }
+
+    public function cont_parametre()
+    {
+        $this->load->view('utilisateur/cont_parametre');
+    }
+
     public function creation_exercicesB()
     {
         $budget = $this->input->post('budgetI');
