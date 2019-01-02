@@ -198,4 +198,25 @@ class Utilisateur extends CI_Controller
 
         $this->load->view('sortie/success');
     }
+
+    public function nouvelle_action_budgetaire()
+    {
+        $id_sortie = $this->input->post('id_sortie');
+        $montant= $this->input->post('montant');
+        $motif = $this->input->post('motif');
+        $dtcreation = $this->input->post('dtcreation');
+
+        $data = array(
+            'id_sortie' => $id_sortie,
+            'montant_utilise' => $montant,
+            'motif' => $motif,
+            'date_creation' => $dtcreation
+        );
+
+        $this->load->model('UtilisateurModel');
+        $this->UtilisateurModel->action_budgetaire($data);
+
+        $this->load->view('action budgetaire/success');
+
+    }
 }

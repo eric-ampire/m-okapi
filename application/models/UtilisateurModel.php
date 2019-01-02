@@ -20,7 +20,7 @@ class UtilisateurModel extends CI_Model
         $this->db->insert($this->nouvel_ex, $infos);
     }
 
-    public function action_budgetaire()
+    public function action_budgetaire($infos)
     {
         $this->db->insert($this->action_budgetaire, $infos);
     }
