@@ -116,6 +116,16 @@ class Utilisateur extends CI_Controller
         $this->load->view('categorie sortie/new_sortie');
     }
 
+    public function action_budgetaire()
+    {
+        $this->load->view('action budgetaire/new_action');
+    }
+
+    public function sortie()
+    {
+        $this->load->view('sortie/sortie');
+    }
+
     public function creation_exercicesB()
     {
         $budget = $this->input->post('budgetI');
@@ -169,5 +179,23 @@ class Utilisateur extends CI_Controller
         $this->UtilisateurModel->nouvelle_categorire_sortie($data);
 
         $this->load->view('categorie sortie/success');
+    }
+
+    public function nouvelle_sortie()
+    {
+        $categorie_sortie = $this->input->post('categorie_sortie');
+        $exercice_budgetaire = $this->input->post('exercice_budgetaire');
+        $seuil = $this->input->post('seuil');
+
+        $data = array(
+        'id_categorie_sortie' => $categorie_sortie,
+        'id_exercice_budgetaire' => $exercice_budgetaire,
+        'seuil' => $seuil
+        );
+
+        $this->load->model('UtilisateurModel');
+        $this->UtilisateurModel->nouvelle_sortie($data);
+
+        $this->load->view('sortie/success');
     }
 }

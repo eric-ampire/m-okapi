@@ -7,6 +7,8 @@ class UtilisateurModel extends CI_Model
     public $nouvel_ex = 'exercice_budgetaire';
     public $nouvelle_categorie_entree = 'entree';
     public $nouvelle_categorie_sortie = 'categorie_sortie';
+    public $action_budgetaire = 'action_budgetaire';
+    public $nouvelle_sortie = 'sortie'; 
 
     public function creer_utilisateur($infos)
     {
@@ -16,6 +18,11 @@ class UtilisateurModel extends CI_Model
     public function nouvel_exercice($infos)
     {
         $this->db->insert($this->nouvel_ex, $infos);
+    }
+
+    public function action_budgetaire()
+    {
+        $this->db->insert($this->action_budgetaire, $infos);
     }
 
     public function check_authentification($data)
@@ -41,5 +48,10 @@ class UtilisateurModel extends CI_Model
     public function nouvelle_categorire_sortie($data)
     {
         $this->db->insert($this->nouvelle_categorie_sortie, $data);
+    }
+
+    public function nouvelle_sortie($data)
+    {
+        $this->db->insert($this->nouvelle_sortie, $data);
     }
 }
