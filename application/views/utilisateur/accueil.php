@@ -52,15 +52,36 @@ body {
         $tab_sujet = array();
         while($s = $req->fetch(PDO::FETCH_OBJ))
         {
-            echo $s->budget_initial;
+            $budget = $s->budget_initial;
+            echo $budget."$";
         }
         
-       
-    ?></h2>
+    echo "  
+    </h2>
 </p>
 
 <p>
-        <h3>Progression evolution : Pourcentage!!</h3>
+        <h3>Progression evolution :</h3>";
+        $identifiant = $this->session->id;  
+        $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
+        $str = 'SELECT montant_utilise FROM action_budgetaire';
+        $req = $db->prepare($str);
+        $val = array(
+            'id_utilisateur' => $identifiant
+        );
+        $req->execute($val);
+        
+        $tab_sujet = array();
+        $montant = 0;
+        while($s = $req->fetch(PDO::FETCH_OBJ))
+        {
+            $montant = $s->montant_utilise + $montant;
+        }echo "<h2>".$montant."$ utilises </h2>";
+        $solde = ($montant/$budget)*100;
+        echo "Soit : <h2>".$solde."% usee</h2>";
+
+
+        ?>
 </p>
 
 <p>
@@ -131,8 +152,8 @@ body {
         $today = date('d-m-Y');
         // transformation de la chaine date en un tableau
         $tb_today = explode("-",$today);
-        echo "</br>Jours restants : ".
-            $result = $ff - $today." jour(s)</br>";
+        echo "</br><h3>Jours restants :</h3><h2> ".
+            $result = $ff - $today." jour(s)</h2></br>";
         
         ?>
 </p>
