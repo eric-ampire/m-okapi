@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Utilisateur extends CI_Controller
 {
+    
     public function form_inscription()
     {
         $this->load->view('utilisateur/form_inscription');
@@ -72,6 +73,12 @@ class Utilisateur extends CI_Controller
     {
         if($this->session->is_connected)
         {
+            $preferences = array(
+                'start_day' => 'sunday',
+                'month_type' => 'long',
+                'day_type' => 'short'
+            );
+            $this->load->library('calendar',$preferences);
             $this->load->view('utilisateur/accueil');
         }
         else
