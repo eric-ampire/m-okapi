@@ -132,6 +132,11 @@ class Utilisateur extends CI_Controller
     {
         $this->load->view('sortie/sortie');
     }
+    
+    public function evolution()
+    {
+        $this->load->view('rapport/evolution');
+    }
 
     public function creation_exercicesB()
     {
