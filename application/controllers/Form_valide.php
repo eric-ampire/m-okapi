@@ -9,12 +9,7 @@ class Form_valide extends Ci_Controller{
         $this->load->helper(array('form','url'));
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('nomcomplet','Nomcomplet','required','max_length[2]',
-            array(
-                'required' => 'Ce champ est obligatoire',
-                'max_length' => 'les caracteres surpasses le delai'
-            
-            ));
+        $this->form_validation->set_rules('nomcomplet','Nomcomplet','required','max_length[2]');
         
         if($this->form_validation->run() == FALSE)
         {

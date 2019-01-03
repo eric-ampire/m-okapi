@@ -33,11 +33,11 @@ body {
 }</style>
 <form method="post" action="<?php echo site_url('Form_valide/verification') /*utilisateur/nouvel_utilisateur*/?>">
     Nom complet:
-    <input name="nomcomplet" /><?php echo set_value('nomcomplet'); ?><br/>
+    <input type="text" name="nomcomplet" ><?php echo form_error('nomcomplet'); ?></br>
     Email:
-    <input name="email" /><br/>
+    <input type="text" name="email" /><br/>
     Login:
-    <input name="login" /><br/>
+    <input type="text" name="login" /><br/>
     Mot de passe:
     <input type="password" name="mdp" /><br/>
     Confirmer:
