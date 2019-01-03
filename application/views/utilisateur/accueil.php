@@ -161,7 +161,8 @@ body {
         while($s = $req->fetch(PDO::FETCH_OBJ))
         {
             echo "Montant utilise :".$s->montant_utilise." motif :".
-            $s->motif." date de creation :".$s->date_creation."</br>";
+            $s->motif." date de creation :".
+            $d = date_format($dt = date_create($s->date_creation),'d-m-Y')."</br>";
         }
 
     ?>
