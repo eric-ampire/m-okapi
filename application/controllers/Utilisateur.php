@@ -138,6 +138,11 @@ class Utilisateur extends CI_Controller
         $this->load->view('rapport/evolution');
     }
 
+    public function parametre_compte()
+    {
+        $this->load->view('utilisateur/parametre_compte');
+    }
+
     public function creation_exercicesB()
     {
         $budget = $this->input->post('budgetI');
@@ -230,5 +235,29 @@ class Utilisateur extends CI_Controller
 
         $this->load->view('action budgetaire/success');
 
+    }
+
+    public function update_login()
+    {
+        $data = $this->input->post('login');
+        $this->load->model('UtilisateurModel');
+        $this->UtilisateurModel->modifier_login($data);   
+    }
+
+    public function update_mdp()
+    {
+        $data = $this->input->post('mdp');
+        $this->load->model('UtilisateurModel');
+        $this->UtilisateurModel->modifier_mdp($data);
+    }
+
+    public function demande_login()
+    {
+        $this->load->view('utilisateur/conf_mod_login');
+    }
+
+    public function demande_mdp()
+    {
+        $this->load->view('utilisateur/conf_mod_mdp');
     }
 }

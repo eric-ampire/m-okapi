@@ -54,4 +54,34 @@ class UtilisateurModel extends CI_Model
     {
         $this->db->insert($this->nouvelle_sortie, $data);
     }
+
+    public function modifier_login($data)
+    {
+        $db = new PDO('mysql:host=localhost;dbname=mokapi', 'root', '');
+        $rq = 'UPDATE utilisateur SET login = :login WHERE 
+        id = :id';
+        $v = array(
+            'login' => $data,
+            'id' => $this->session->id
+        );
+        $res = $db->prepare($rq);
+        $res->execute($v);
+
+        $this->load->view('sortie/success');
+    }
+
+    public function modifier_mdp($data)
+    {
+        $db = new PDO('mysql:host=localhost;dbname=mokapi', 'root', '');
+        $rq = 'UPDATE utilisateur SET mdp = :mdp WHERE 
+        id = :id';
+        $v = array(
+            'mdp' => $data,
+            'id' => $this->session->id
+        );
+        $res = $db->prepare($rq);
+        $res->execute($v);
+
+        $this->load->view('sortie/success');
+    }
 }

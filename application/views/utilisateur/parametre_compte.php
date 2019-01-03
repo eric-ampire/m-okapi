@@ -1,4 +1,4 @@
-<h1> M-OKAPI</h1>
+<h1>M-OKAPI</h1>
 <style type="text/css">
         ::selection { background-color: #E13300; color: white; }
     ::-moz-selection { background-color: #E13300; color: white; }
@@ -29,10 +29,11 @@ body {
 	color: #003399;
 	background-color: transparent;
 	font-weight: normal;
-}</style>
-<h3>Parametres</h3>
+}
+</style>
+<a href="<?php echo site_url('utilisateur/parametre'); ?>">annuler</a>
+<h2>Votre compte</h2>
 <p>
-    <a href="<?php echo site_url('utilisateur/cont_parametre'); ?>">Parametre Budgetaire</a></br>
-    <a href="<?php echo site_url('utilisateur/parametre_compte'); ?>">Parametre du compte</a></br>
-    <a href="<?php echo site_url('utilisateur/menu');?>">Retour</a>
+    Login <a href="<?php echo site_url('utilisateur/demande_login'); ?>">modifier</a></br></br>
+    Mot de passe <a href="<?php echo site_url('utilisateur/demande_mdp'); ?>">modifier</a>
 </p>
