@@ -204,16 +204,45 @@ class Utilisateur extends CI_Controller
         $exercice_budgetaire = $this->input->post('exercice_budgetaire');
         $seuil = $this->input->post('seuil');
 
-        $data = array(
-        'id_categorie_sortie' => $categorie_sortie,
-        'id_exercice_budgetaire' => $exercice_budgetaire,
-        'seuil' => $seuil
+        //controles seuil 
+        $identifiant = $this->session->id;  
+        $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
+        $str = 'SELECT budget_initial FROM 
+        exercice_budgetaire WHERE id_utilisateur = :id_utilisateur';
+        $req = $db->prepare($str);
+        $val = array(
+            'id_utilisateur' => $identifiant
         );
+        $req->execute($val);
+        while($s = $req->fetch(PDO::FETCH_OBJ))
+        {
+            $c = $s->budget_initial;
+        }
+        $budget = $c;
+        if($seuil > $budget || $seuil < 0 || $seuil == 0)
+        {
+            echo "la valeur du seuil doit etre non nulle, superieur a '0' et inferieur au budget initial</br>";
+            echo "<a href=".site_url('utilisateur/sortie').">Ressayer</a>";    
+        }
+        else if(empty($seuil))
+        {
+            echo "Entrer une valeur du seuil";
+            echo "<a href=".site_url('utilisateur/sortie').">Ressayer</a>";
+        }
 
-        $this->load->model('UtilisateurModel');
-        $this->UtilisateurModel->nouvelle_sortie($data);
-
-        $this->load->view('sortie/success');
+        else
+        {
+                $data = array(
+                'id_categorie_sortie' => $categorie_sortie,
+                'id_exercice_budgetaire' => $exercice_budgetaire,
+                'seuil' => $seuil
+                );
+        
+                $this->load->model('UtilisateurModel');
+                $this->UtilisateurModel->nouvelle_sortie($data);
+        
+                $this->load->view('sortie/success');
+        }
     }
 
     public function nouvelle_action_budgetaire()

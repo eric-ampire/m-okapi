@@ -45,14 +45,15 @@ body {
             );
             $req->execute($val);
             $name = 'id_sortie';
+            echo "<select name=".$name." >";
             while($s = $req->fetch(PDO::FETCH_OBJ))
             {
                 echo "
-                <select name=".$name." >
                     <option value=".$s->id.">".$s->seuil."</option>
-                </select>
+                
                     ";
             }
+            echo "</select>";
     ?>
     </br>
     Montant utilise :
