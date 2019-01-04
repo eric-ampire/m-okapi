@@ -247,23 +247,93 @@ class Utilisateur extends CI_Controller
 
     public function nouvelle_action_budgetaire()
     {
+        $identifiant = $this->session->id;
         $id_sortie = $this->input->post('id_sortie');
         $montant= $this->input->post('montant');
         $motif = $this->input->post('motif');
         $dtcreation = $this->input->post('dtcreation');
-
-        $data = array(
-            'id_sortie' => $id_sortie,
-            'montant_utilise' => $montant,
-            'motif' => $motif,
-            'date_creation' => $dtcreation
+        
+        $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
+        $str = 'SELECT seuil FROM sortie WHERE
+        id = :id_sortie';
+        $req = $db->prepare($str);
+        $val = array(
+            'id_sortie' => $id_sortie
         );
+        $req->execute($val);
+        while($s = $req->fetch(PDO::FETCH_OBJ))
+        {
+            $seuil = $s->seuil;
+        }
+        $seuil = $seuil;
 
-        $this->load->model('UtilisateurModel');
-        $this->UtilisateurModel->action_budgetaire($data);
+        if($montant > $seuil)
+        {
+            echo "Le montant depasse la valeur du seuil</br>";
+            echo "Veuillez entrer unn valeur non nulle et inferieure au seuil</br>";
+            echo "<a href=".site_url('utilisateur/action_budgetaire').">Ressayer</a></br>";
+            echo "<a href=".site_url('utilisateur/accueil').">Annuler</a></br>";
+        }
+        else if($montant <=0)
+        {
+            echo "Le montant est nulle</br>";
+            echo "Veuillez entrer unn valeur non nulle et inferieure au seuil</br>";
+            echo "<a href=".site_url('utilisateur/action_budgetaire').">Ressayer</a></br>";
+            echo "<a href=".site_url('utilisateur/accueil').">Annuler</a></br>";
+        }
+        else{
+            
+            $db = new PDO('mysql:host=localhost;dbname=mokapi', 'root', '');
+            $rq = 'UPDATE sortie SET seuil = :seuil WHERE 
+            id = :id_sortie';
+            $v = array(
+                'id_sortie' => $id_sortie,
+                'seuil' => $seuil - $montant
+            );
+            $res = $db->prepare($rq);
+            $res->execute($v);
+            
+            $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
+            $str = 'SELECT budget_initial FROM exercice_budgetaire WHERE
+            id_utilisateur = :id_utilisateur';
+            $req = $db->prepare($str);
+            $val = array(
+                'id_utilisateur' => $identifiant,
+            );
+            $req->execute($val);
+            $solde = 0;
+            while($s = $req->fetch(PDO::FETCH_OBJ))
+            {
+                $c = $s->budget_initial;
+            }
+    
+            $new_budget = $c - $montant;
+    
+            $db = new PDO('mysql:host=localhost;dbname=mokapi', 'root', '');
+            $rq = 'UPDATE exercice_budgetaire SET budget_initial = :budget_initial WHERE 
+            id_utilisateur = :id_utilisateur';
+            $v = array(
+                'id_utilisateur' => $identifiant,
+                'budget_initial' => $new_budget
+            );
+            $res = $db->prepare($rq);
+            $res->execute($v);
+    
+            $data = array(
+                'id_sortie' => $id_sortie,
+                'montant_utilise' => $montant,
+                'motif' => $motif,
+                'date_creation' => $dtcreation
+            );
+    
+            $this->load->model('UtilisateurModel');
+            $this->UtilisateurModel->action_budgetaire($data);
+    
+            $this->load->view('action budgetaire/success');
+        }
 
-        $this->load->view('action budgetaire/success');
 
+        
     }
 
     public function update_login()
