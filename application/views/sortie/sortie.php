@@ -46,14 +46,17 @@ body {
             );
             $req->execute($val);
             $name = 'categorie_sortie';
+            echo "<select name=".$name." >";
             while($s = $req->fetch(PDO::FETCH_OBJ))
             {
+                
                 echo "
-                <select name=".$name." >
                     <option value=".$s->id.">".$s->nom."</option>
-                </select>
+                
                     ";
+               
             }
+            echo"</select>";
         ?>   
     </br>
     Exercices budgetaire :
@@ -68,14 +71,14 @@ body {
             );
             $req->execute($val);
             $name = 'exercice_budgetaire';
+            echo "<select name=".$name." >";
             while($s = $req->fetch(PDO::FETCH_OBJ))
             {
                 echo "
-                <select name=".$name." >
                     <option value=".$s->id.">".$s->budget_initial."</option>
-                </select>
                     ";
             }
+            echo "</select>";
         ?>   
     </br>
     Seuil :
