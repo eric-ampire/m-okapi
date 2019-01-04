@@ -34,7 +34,27 @@ body {
 
 <form method="post" action="<?php echo site_url('utilisateur/nouvelle_action_budgetaire'); ?>" >
     Sortie :
-    <input type="text" name="id_sortie" /></br>
+    <?php
+            $identifiant = $this->session->id;  
+            $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
+            $str = 'SELECT id, seuil FROM 
+            sortie ';
+            $req = $db->prepare($str);
+            $val = array(
+                'id_utilisateur' => $identifiant
+            );
+            $req->execute($val);
+            $name = 'id_sortie';
+            while($s = $req->fetch(PDO::FETCH_OBJ))
+            {
+                echo "
+                <select name=".$name." >
+                    <option value=".$s->id.">".$s->seuil."</option>
+                </select>
+                    ";
+            }
+    ?>
+    </br>
     Montant utilise :
     <input typpe="text" name="montant" /></br>
     Motif d'usage :

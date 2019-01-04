@@ -35,9 +35,49 @@ body {
 
 <form method="post" action="<?php echo site_url('utilisateur/nouvelle_sortie'); ?>" >
     Categorie de sortie :
-    <input type="text" name="categorie_sortie" /></br>
-    Exercices budgetaire : 
-    <input type="text" name="exercice_budgetaire" /></br>
+    <?php
+    $identifiant = $this->session->id;  
+            $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
+            $str = 'SELECT id, nom FROM 
+            categorie_sortie WHERE id_utilisateur = :id_utilisateur';
+            $req = $db->prepare($str);
+            $val = array(
+                'id_utilisateur' => $identifiant
+            );
+            $req->execute($val);
+            $name = 'categorie_sortie';
+            while($s = $req->fetch(PDO::FETCH_OBJ))
+            {
+                echo "
+                <select name=".$name." >
+                    <option value=".$s->id.">".$s->nom."</option>
+                </select>
+                    ";
+            }
+        ?>   
+    </br>
+    Exercices budgetaire :
+    <?php
+            $identifiant = $this->session->id;  
+            $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
+            $str = 'SELECT id, budget_initial FROM 
+            exercice_budgetaire WHERE id_utilisateur = :id_utilisateur';
+            $req = $db->prepare($str);
+            $val = array(
+                'id_utilisateur' => $identifiant
+            );
+            $req->execute($val);
+            $name = 'exercice_budgetaire';
+            while($s = $req->fetch(PDO::FETCH_OBJ))
+            {
+                echo "
+                <select name=".$name." >
+                    <option value=".$s->id.">".$s->budget_initial."</option>
+                </select>
+                    ";
+            }
+        ?>   
+    </br>
     Seuil :
     <input type="text" name="seuil" /></br>
     <input type="submit" value="Enregistrer" />
