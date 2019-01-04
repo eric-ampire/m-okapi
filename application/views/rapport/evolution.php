@@ -107,7 +107,7 @@ body {
         $montant_entree = 0;
         while($s = $req->fetch(PDO::FETCH_OBJ))
         {
-            echo " Description : ".$s->nom;
+            echo " Description : ".$s->nom."</br>";
 
         }
     ?>
