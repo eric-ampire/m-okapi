@@ -137,9 +137,15 @@ body {
         
         $today = date('d-m-Y');
         $result = $fin - $today;
-        echo "</br> Jours restants :<h3>".$result." jour(s)</h3";
-    
-    
+        if($result <=0)
+        {
+            echo "</br> <h2>L'execices tire a sa fin .</h2>";
+            echo "<h3>Veuillez creer un nouvel exercices</h3>";
+        }
+        else
+        {
+            echo "</br> Jours restants :<h3>".$result." jour(s)</h3";
+        }
     ?>
 </p>
 
