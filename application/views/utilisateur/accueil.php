@@ -40,7 +40,7 @@ body {
 <p>
     votre solde : <h2>
     <?php
-        
+
         $identifiant = $this->session->id;  
         $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
         $str = 'SELECT montant FROM 
@@ -88,7 +88,13 @@ body {
     $identifiant = $this->session->id;  
     $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
     $str = 'SELECT montant_utilise FROM 
-    action_budgetaire';
+        action_budgetaire WHERE id_sortie IN (
+            SELECT id FROM sortie WHERE id_categorie_sortie IN (
+                SELECT id FROM categorie_sortie WHERE id_utilisateur IN (
+                    SELECT id FROM utilisateur WHERE id = :id_utilisateur
+                )
+            )
+        )';
     $req = $db->prepare($str);
     $val = array(
         'id_utilisateur' => $identifiant
@@ -155,7 +161,14 @@ body {
         $identifiant = $this->session->id;  
         $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
         $str = 'SELECT montant_utilise, motif, date_creation FROM 
-        action_budgetaire';
+        action_budgetaire WHERE id_sortie IN (
+            SELECT id FROM sortie WHERE id_categorie_sortie IN (
+                SELECT id FROM categorie_sortie WHERE id_utilisateur IN (
+                    SELECT id FROM utilisateur WHERE id = :id_utilisateur
+                )
+            )
+        )';
+
         $req = $db->prepare($str);
         $val = array(
             'id_utilisateur' => $identifiant
@@ -163,12 +176,11 @@ body {
         $req->execute($val);
         
         $tab_sujet = array();
-        $solde = 0;
         while($s = $req->fetch(PDO::FETCH_OBJ))
         {
-            echo "Montant utilise :".$s->montant_utilise." motif :".
-            $s->motif." date de creation :".
-            $d = date_format($dt = date_create($s->date_creation),'d-m-Y')."</br>";
+                echo "Montant utilise :".$s->montant_utilise." motif :".
+                $s->motif." date de creation :".
+                $d = date_format($dt = date_create($s->date_creation),'d-m-Y')."</br>";
         }
 
     ?>

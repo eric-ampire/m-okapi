@@ -32,7 +32,7 @@ class UtilisateurModel extends CI_Model
         $res = $q->result();
         return  $res;
     }
-
+    
     public function chek_budget($identifiant){
         $this->db->where($identifiant);
         $q = $this->db->simple_query('SELECT budget_initial FROM exercice_budgetaire WHERE id = $identifiant' );
