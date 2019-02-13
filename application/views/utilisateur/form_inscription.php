@@ -37,31 +37,31 @@ body {
     <table>
         <tr>
             <td>Nom complet:</td>
-            <td><input type="text" name="nomcomplet" ></td>
+            <td><input type="text" name="nomcomplet" required></td>
             <td><?php echo form_error('nomcomplet'); ?></td>
         </tr>
 
         <tr>
             <td>Email:</td>
-            <td><input type="text" name="email" /></td>
+            <td><input type="text" name="email" required/></td>
             <td><?php echo form_error('email'); ?></td>
         </tr>
 
         <tr>
             <td>Login:</td>
-            <td><input type="text" name="login" /></td>
+            <td><input type="text" name="login" required/></td>
             <td><?php echo form_error('login'); ?></td>
         </tr>
 
         <tr>
             <td>Mot de passe:</td>
-            <td><input type="password" name="mdp" /></td>
+            <td><input type="password" name="mdp" required/></td>
             <td><?php echo form_error('mdp'); ?></td>
         </tr>
 
         <tr>
             <td>Confirmer:</td>
-            <td><input type="password" name="mdpconf" /></td>
+            <td><input type="password" name="mdpconf" required/></td>
             <td><?php echo form_error('mdpconf'); ?></td>
             <td><?php if (isset($password_message)) echo $password_message; echo form_error('mdp'); ?></td>
         </tr>
