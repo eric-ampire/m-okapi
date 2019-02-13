@@ -31,17 +31,44 @@ body {
 	background-color: transparent;
 	font-weight: normal;
 }</style>
-<form method="post" action="<?php echo site_url('Form_valide/verification') /*utilisateur/nouvel_utilisateur*/?>">
-    Nom complet:
-    <input type="text" name="nomcomplet" ><?php echo form_error('nomcomplet'); ?></br>
-    Email:
-    <input type="text" name="email" /><br/>
-    Login:
-    <input type="text" name="login" /><br/>
-    Mot de passe:
-    <input type="password" name="mdp" /><br/>
-    Confirmer:
-    <input type="password" name="mdpconf" /><br/>
-    <input type="submit" value="Créer" />
-    <a href="<?php echo site_url('utilisateur/form_authentification') ?>">J'ai déjà un compte</a>
+
+
+<?php echo form_open("utilisateur/nouvel_utilisateur")?>
+    <table>
+        <tr>
+            <td>Nom complet:</td>
+            <td><input type="text" name="nomcomplet" ></td>
+            <td><?php echo form_error('nomcomplet'); ?></td>
+        </tr>
+
+        <tr>
+            <td>Email:</td>
+            <td><input type="text" name="email" /></td>
+            <td><?php echo form_error('email'); ?></td>
+        </tr>
+
+        <tr>
+            <td>Login:</td>
+            <td><input type="text" name="login" /></td>
+            <td><?php echo form_error('login'); ?></td>
+        </tr>
+
+        <tr>
+            <td>Mot de passe:</td>
+            <td><input type="password" name="mdp" /></td>
+            <td><?php echo form_error('mdp'); ?></td>
+        </tr>
+
+        <tr>
+            <td>Confirmer:</td>
+            <td><input type="password" name="mdpconf" /></td>
+            <td><?php echo form_error('mdpconf'); ?></td>
+            <td><?php if (isset($password_message)) echo $password_message; echo form_error('mdp'); ?></td>
+        </tr>
+
+        <tr>
+            <td><input type="submit" value="Créer" /></td>
+            <td><?php echo anchor('utilisateur/form_authentification', 'J\'ai déjà un compte')?></td>
+        </tr>
+    </table>
 </form>
