@@ -10,19 +10,22 @@ class Sortie
 {
     private $id;
     private $idCategorieSortie;
-    private $idExercie;
+    private $idExerciceBudgetaire;
+    private $seuil;
 
     /**
      * Sortie constructor.
      * @param $id
      * @param $idCategorieSortie
-     * @param $idExercie
+     * @param $idExerciceBudgetaire
+     * @param $seuil
      */
-    public function __construct($id, $idCategorieSortie, $idExercie)
+    public function __construct($id, $idCategorieSortie, $idExerciceBudgetaire, $seuil)
     {
         $this->id = $id;
         $this->idCategorieSortie = $idCategorieSortie;
-        $this->idExercie = $idExercie;
+        $this->idExerciceBudgetaire = $idExerciceBudgetaire;
+        $this->seuil = $seuil;
     }
 
     /**
@@ -60,18 +63,41 @@ class Sortie
     /**
      * @return mixed
      */
-    public function getIdExercie()
+    public function getIdExerciceBudgetaire()
     {
-        return $this->idExercie;
+        return $this->idExerciceBudgetaire;
     }
 
     /**
-     * @param mixed $idExercie
+     * @param mixed $idExerciceBudgetaire
      */
-    public function setIdExercie($idExercie)
+    public function setIdExerciceBudgetaire($idExerciceBudgetaire)
     {
-        $this->idExercie = $idExercie;
+        $this->idExerciceBudgetaire = $idExerciceBudgetaire;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSeuil()
+    {
+        return $this->seuil;
+    }
+
+    /**
+     * @param mixed $seuil
+     */
+    public function setSeuil($seuil)
+    {
+        $this->seuil = $seuil;
+    }
+
+    /**
+     * Sortie constructor.
+     * @param $id
+     * @param $idCategorieSortie
+     * @param $idExercie
+     */
 
 
 }
