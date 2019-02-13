@@ -31,16 +31,23 @@ body {
 	background-color: transparent;
 	font-weight: normal;
 }</style>
-<form method="post" action="<?php echo site_url('utilisateur/connexion') ?>">
-    Login:
-    <input name="login" /><br/>
-    Mot de passe:
-    <input type="password" name="mdp" /><br/>
-    <em style="color: red">
-    <?php
-        echo $this->session->error_login;
-    ?>
-    <em>
-    <br/>
-    <input type="submit" value="Se connecter" />
-</form>
+
+<?php echo form_open("utilisateur/connexion")?>
+<table>
+    <tr>
+        <td>Login:</td>
+        <td><input name="login" required/><br/></td>
+    </tr>
+
+    <tr>
+        <td>Mot de passe:</td>
+        <td> <input type="password" name="mdp" required/><br/></td>
+        <td><?php echo $this->session->error_login; ?><br/></td>
+    </tr>
+
+    <tr>
+        <td><input type="submit" value="Se connecter" /></td>
+        <td><?php echo anchor("utilisateur/nouvel_utilisateur", 'Creez un compte')?></td>
+        <td></td>
+    </tr>
+</table>
