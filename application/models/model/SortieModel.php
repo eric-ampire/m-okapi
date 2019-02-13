@@ -40,4 +40,10 @@ class SortieModel extends CI_Model
 
         return $this->db->get()->result();
     }
+
+    function update($data, $idSortie) {
+        $this->db->set("seuil", $data['seuil']);
+        $this->db->where("id", $idSortie);
+        $this->db->update($this->tableName);
+    }
 }
