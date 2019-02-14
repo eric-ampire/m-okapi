@@ -34,55 +34,37 @@ body {
 <h3>Nouvelle sortie</h3>
 
 <form method="post" action="<?php echo site_url('utilisateur/nouvelle_sortie'); ?>" >
-    Categorie de sortie :
-    <?php
-    $identifiant = $this->session->id;  
-            $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
-            $str = 'SELECT id, nom FROM 
-            categorie_sortie WHERE id_utilisateur = :id_utilisateur';
-            $req = $db->prepare($str);
-            $val = array(
-                'id_utilisateur' => $identifiant
-            );
-            $req->execute($val);
-            $name = 'categorie_sortie';
-            echo "<select name=".$name." >";
-            while($s = $req->fetch(PDO::FETCH_OBJ))
-            {
-                
-                echo "
-                    <option value=".$s->id.">".$s->nom."</option>
-                
-                    ";
-               
-            }
-            echo"</select>";
-        ?>   
-    </br>
-    Exercices budgetaire :
-    <?php
-            $identifiant = $this->session->id;  
-            $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
-            $str = 'SELECT id, budget_initial FROM 
-            exercice_budgetaire WHERE id_utilisateur = :id_utilisateur';
-            $req = $db->prepare($str);
-            $val = array(
-                'id_utilisateur' => $identifiant
-            );
-            $req->execute($val);
-            $name = 'exercice_budgetaire';
-            echo "<select name=".$name." >";
-            while($s = $req->fetch(PDO::FETCH_OBJ))
-            {
-                echo "
-                    <option value=".$s->id.">".$s->budget_initial."</option>
-                    ";
-            }
-            echo "</select>";
-        ?>   
-    </br>
-    Seuil :
-    <input type="text" name="seuil" /></br>
+    <table>
+        <tr>
+            <td>Categorie de sortie :</td>
+            <td>
+
+                <select required name="categorie_sortie" >
+                    <?php foreach ($cat_sortie as $item) {
+                        echo "<option value=" . $item->id . ">". $item->nom . "</option>";
+                    }?>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Exercices budgetaire :</td>
+            <td>
+                <select required name="exercice_budgetaire" >
+                    <?php foreach ($exo_budgetaire as $item) {
+                        echo "<option value=" . $item->id . ">". $item->budget_initial . "</option>";
+                    }?>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Seuil :</td>
+            <td><input type="text" name="seuil" required /></br></td>
+            <td><?php echo form_error('seuil'); ?></td>
+        </tr>
+    </table>
+
     <input type="submit" value="Enregistrer" />
 </form>
 <a href="<?php echo site_url('utilisateur/cont_parametre'); ?>">Retour</a>
