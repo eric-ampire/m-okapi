@@ -3,26 +3,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class UtilisateurModel extends CI_Model
 {
-    public $table = 'utilisateur';
-    public $nouvel_ex = 'exercice_budgetaire';
-    public $nouvelle_categorie_entree = 'entree';
-    public $nouvelle_categorie_sortie = 'categorie_sortie';
-    public $action_budgetaire = 'action_budgetaire';
-    public $nouvelle_sortie = 'sortie'; 
+    private $table = 'utilisateur';
 
     public function creer_utilisateur($infos)
     {
         $this->db->insert($this->table, $infos);
     }
 
-    public function nouvel_exercice($infos)
+    public function getUser($id)
     {
-        $this->db->insert($this->nouvel_ex, $infos);
-    }
+        $this->db->from($this->table);
+        $this->db->select('*');
+        $this->db->where('id', $id);
+        $res = $this->db->get()->result();
 
-    public function action_budgetaire($infos)
-    {
-        $this->db->insert($this->action_budgetaire, $infos);
+        if (count($res) > 0) {
+            return $res[0];
+        }
+        return  null;
     }
 
     public function check_authentification($data)
@@ -32,56 +30,18 @@ class UtilisateurModel extends CI_Model
         $res = $q->result();
         return  $res;
     }
-    
-    public function chek_budget($identifiant){
-        $this->db->where($identifiant);
-        $q = $this->db->simple_query('SELECT budget_initial FROM exercice_budgetaire WHERE id = $identifiant' );
-        $res = $q->result();
-        return  $res;
+
+    public function modifier_login($data, $id)
+    {
+        $this->db->where('id', $id);
+        $this->db->set('login', $data['login']);
+        $this->db->update("utilisateur");
     }
 
-    public function nouvelle_categorie_entree($data)
+    public function modifier_mdp($data, $id)
     {
-        $this->db->insert($this->nouvelle_categorie_entree, $data);
-    }
-
-    public function nouvelle_categorire_sortie($data)
-    {
-        $this->db->insert($this->nouvelle_categorie_sortie, $data);
-    }
-
-    public function nouvelle_sortie($data)
-    {
-        $this->db->insert($this->nouvelle_sortie, $data);
-    }
-
-    public function modifier_login($data)
-    {
-        $db = new PDO('mysql:host=localhost;dbname=mokapi', 'root', '');
-        $rq = 'UPDATE utilisateur SET login = :login WHERE 
-        id = :id';
-        $v = array(
-            'login' => $data,
-            'id' => $this->session->id
-        );
-        $res = $db->prepare($rq);
-        $res->execute($v);
-
-        $this->load->view('sortie/success');
-    }
-
-    public function modifier_mdp($data)
-    {
-        $db = new PDO('mysql:host=localhost;dbname=mokapi', 'root', '');
-        $rq = 'UPDATE utilisateur SET mdp = :mdp WHERE 
-        id = :id';
-        $v = array(
-            'mdp' => $data,
-            'id' => $this->session->id
-        );
-        $res = $db->prepare($rq);
-        $res->execute($v);
-
-        $this->load->view('sortie/success');
+        $this->db->where('id', $id);
+        $this->db->set('mdp', $data['mdp']);
+        $this->db->update("utilisateur");
     }
 }
