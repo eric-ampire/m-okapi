@@ -35,13 +35,13 @@ body {
 </p>
 <form method="post" action="<?php echo site_url('utilisateur/creation_exercicesB');  ?>">
     Budget initial :
-    <input type="text" name="budgetI" /></br>
+    <input type="text" name="budgetI" required/></br>
     Date de creation :
-    <input type="date" name="dtcreation" /></br>
+    <input type="date" name="dtcreation" required/></br>
     Date debut de l'exercices :
-    <input type="date" name="dtdebut"/></br>
+    <input type="date" name="dtdebut" required/></br>
     Date fin de l'exercices :
-    <input type="date" name="dtfin"/></br>
+    <input type="date" name="dtfin" required/></br>
     <input type="submit" value="creer">
 </form>
 <a href="<?php echo site_url('utilisateur/menu'); ?>">Retour</a>
