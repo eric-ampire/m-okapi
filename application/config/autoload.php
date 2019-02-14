@@ -132,4 +132,11 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array();
+$autoload['model'] = array(
+    'ActionBudgetaireModel' => 'action_budgetaire_model',
+    'EntreModel' => 'entre_model',
+    "SortieModel" => 'sortie_model',
+    'ExerciceBudgetaireModel' => 'exercices_budgetaire_model',
+    'CategorieSortieModel' => 'categorie_sortie_model',
+    'UtilisateurModel' => 'utilisateur_model'
+);
