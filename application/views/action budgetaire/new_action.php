@@ -57,11 +57,11 @@ body {
     ?>
     </br>
     Montant utilise :
-    <input typpe="text" name="montant" /></br>
+    <input typpe="text" name="montant" required/></br>
     Motif d'usage :
-    <input type="text" name="motif" /></br>
+    <input type="text" name="motif" required/></br>
     Date creation :
-    <input type="date" name="dtcreation" /></br>
+    <input type="date" name="dtcreation" required/></br>
     <input type="submit" value="Enregistrer" />
 </form>
 <a href="<?php  echo site_url('utilisateur/cont_parametre'); ?>">Retour</a>
