@@ -41,42 +41,26 @@ body {
     votre solde : <h2>
     <?php
 
-        $identifiant = $this->session->id;  
-        $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
-        $str = 'SELECT montant FROM 
-        entree WHERE
-        id_utilisateur = :id_utilisateur';
-        $req = $db->prepare($str);
-        $val = array(
-            'id_utilisateur' => $identifiant
-        );
-        $req->execute($val);
-        
-        $tab_sujet = array();
         $montant_entree = 0;
-        while($s = $req->fetch(PDO::FETCH_OBJ))
-        {
-            $montant_entree = $s->montant + $montant_entree;
+        foreach ($entres as $item) {
+            $montant_entree = $item->montant + $montant_entree;
         }
+
         $f_entree = $montant_entree;
-        
-        $identifiant = $this->session->id;  
-        $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
-        $str = 'SELECT budget_initial FROM 
-        exercice_budgetaire WHERE
-        id_utilisateur = :id_utilisateur';
-        $req = $db->prepare($str);
-        $val = array(
-            'id_utilisateur' => $identifiant
-        );
-        $req->execute($val);
-        
-        $tab_sujet = array();
-        $solde = 0;
-        while($s = $req->fetch(PDO::FETCH_OBJ))
-        {
-            $solde = $s->budget_initial + $solde;
+
+        $montant_utilise = 0;
+        foreach ($action_budgetaires as $item) {
+            $montant_utilise= $item->montant_utilise + $montant_utilise;
         }
+
+        $montant = $montant_utilise;
+
+        $solde = 0;
+        foreach ($exercice_budgetaires as $item) {
+            $solde = $item->budget_initial + $solde;
+        }
+
+
         echo $solde."$";
         echo "</h2></br>";
         echo "Entrees : <h2>".$f_entree."$</h2>";
@@ -85,31 +69,9 @@ body {
 <p>
     <h3>Progression evolution :</h3>";
 
-    $identifiant = $this->session->id;  
-    $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
-    $str = 'SELECT montant_utilise FROM 
-        action_budgetaire WHERE id_sortie IN (
-            SELECT id FROM sortie WHERE id_categorie_sortie IN (
-                SELECT id FROM categorie_sortie WHERE id_utilisateur IN (
-                    SELECT id FROM utilisateur WHERE id = :id_utilisateur
-                )
-            )
-        )';
-    $req = $db->prepare($str);
-    $val = array(
-        'id_utilisateur' => $identifiant
-    );
-    $req->execute($val);
-    
-    $tab_sujet = array();
-    $montant_utilise = 0;
-    while($s = $req->fetch(PDO::FETCH_OBJ))
-    {
-        $montant_utilise= $s->montant_utilise + $montant_utilise;
-    }
-    $montant = $montant_utilise;
-    echo "<h2>".$montant."$</h2> utilise   soit :<h2>".(($montant/$solde)*100)."%</h2> consomme's "; 
-    
+        if ($montant > 0) {
+            echo "<h2>".$montant."$</h2> utilise   soit :<h2>".(($montant/$solde)*100)."%</h2> consomme's ";
+        }
     ?>
 </p>
 
@@ -118,39 +80,30 @@ body {
     <?php  
         echo $this->calendar->generate();
         echo "</br>";
-        $identifiant = $this->session->id;  
-        $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
-        $str = 'SELECT date_creation, date_debut, date_fin FROM 
-        exercice_budgetaire WHERE id_utilisateur = :id_utilisateur';
-        $req = $db->prepare($str);
-        $val = array(
-            'id_utilisateur' => $identifiant
-        );
-        $req->execute($val);
-        
-        $tab_sujet = array();
-        $solde = 0;
-        while($s = $req->fetch(PDO::FETCH_OBJ))
-        {
-            $dt_creation = date_create($s->date_creation);
-            $dt_debut = date_create($s->date_debut);
-            $dt_fin = date_create($s->date_fin);
+
+        foreach ($exercice_budgetaires as $item) {
+            $dt_creation = date_create($item->date_creation);
+            $dt_debut = date_create($item->date_debut);
+            $dt_fin = date_create($item->date_fin);
         }
 
-        echo "Ce budget a ete initialise en date du :".date_format($dt_creation,'d-m-Y');
-        echo "</br>Sa duree va du :".date_format($dt_debut,'d-m-Y');
-        echo"</br>Au :".$fin = date_format($dt_fin,'d-m-Y');
-        
-        $today = date('d-m-Y');
-        $result = $fin - $today;
-        if($result <=0)
-        {
-            echo "</br> <h2>L'execices tire a sa fin .</h2>";
-            echo "<h3>Veuillez creer un nouvel exercices</h3>";
-        }
-        else
-        {
-            echo "</br> Jours restants :<h3>".$result." jour(s)</h3";
+        if (count($exercice_budgetaires) > 0) {
+            echo "Ce budget a ete initialise en date du :".date_format($dt_creation,'d-m-Y');
+            echo "</br>Sa duree va du :".date_format($dt_debut,'d-m-Y');
+            echo"</br>Au :" . $fin = date_format($dt_fin,'d-m-Y');
+
+            $today = date('d-m-Y');
+            $result = date_diff(new DateTime($fin), new DateTime($today));
+
+            if($result->d <=0)
+            {
+                echo "</br> <h2>L'execices tire a sa fin .</h2>";
+                echo "<h3>Veuillez creer un nouvel exercices</h3>";
+            }
+            else
+            {
+                echo "</br> Jours restants :<h3>" .$result->days." jour(s)</h3>";
+            }
         }
     ?>
 </p>
@@ -158,29 +111,13 @@ body {
 <p>
     <h3>Les derniers mouvements</h3> 
     <?php
-        $identifiant = $this->session->id;  
-        $db = new PDO('mysql:host=localhost; dbname=mokapi', 'root', '');
-        $str = 'SELECT montant_utilise, motif, date_creation FROM 
-        action_budgetaire WHERE id_sortie IN (
-            SELECT id FROM sortie WHERE id_categorie_sortie IN (
-                SELECT id FROM categorie_sortie WHERE id_utilisateur IN (
-                    SELECT id FROM utilisateur WHERE id = :id_utilisateur
-                )
-            )
-        )';
 
-        $req = $db->prepare($str);
-        $val = array(
-            'id_utilisateur' => $identifiant
-        );
-        $req->execute($val);
-        
-        $tab_sujet = array();
-        while($s = $req->fetch(PDO::FETCH_OBJ))
-        {
-                echo "Montant utilise :".$s->montant_utilise." motif :".
-                $s->motif." date de creation :".
-                $d = date_format($dt = date_create($s->date_creation),'d-m-Y')."</br>";
+        foreach ($action_budgetaires as $item) {
+            $montant_utilise= $item->montant_utilise + $montant_utilise;
+
+            echo " Montant utilise :".$item->montant_utilise." Motif :".
+            $item->motif." date de creation :".
+            $d = date_format($dt = date_create($item->date_creation),'d-m-Y')."</br>";
         }
 
     ?>
