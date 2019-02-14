@@ -345,9 +345,36 @@ class Utilisateur extends CI_Controller
 
     public function update_mdp()
     {
-        $data = $this->input->post('mdp');
-        $this->load->model('UtilisateurModel');
-        $this->UtilisateurModel->modifier_mdp($data);
+        $new_password = $this->input->post('new_mdp');
+        $confirm_password = $this->input->post('confirm_mdp');
+        $old_password = $this->input->post('old_mdp');
+
+        $this->form_validation->set_rules("old_mdp","motif", "required|min_length[6]", array('required' => "C'est champ est obligatoire", "min_length" => "Le mot de passe doit avoir au moins 6 caracteres"));
+        $this->form_validation->set_rules("new_mdp","Montant", "required|min_length[6]", array('required' => "C'est champ est obligatoire", "min_length" => "Le mot de passe doit avoir au moins 6 caracteres"));
+        $this->form_validation->set_rules("confirm_mdp","motif", "required|min_length[6]", array('required' => "C'est champ est obligatoire", "min_length" => "Le mot de passe doit avoir au moins 6 caracteres"));
+
+
+
+        if ($this->form_validation->run()) {
+
+            $utilisateur = $this->utilisateur_model->getUser($this->session->id);
+            if ($utilisateur == null) return;
+
+            if ($new_password == $confirm_password AND $utilisateur->mdp == $old_password) {
+
+                $data = array("mdp" => $new_password);
+                $this->utilisateur_model->modifier_mdp($data, $this->session->id);
+
+                $data = array('password_error' => 'Le mot de passe a etait modifier avec succes');
+                $this->load->view("utilisateur/conf_mod_mdp", $data);
+
+            } else {
+                $data = array('password_error' => 'Le mots de passe ne correpond pas');
+                $this->load->view("utilisateur/conf_mod_mdp", $data);
+            }
+        } else {
+            $this->load->view("utilisateur/conf_mod_mdp");
+        }
     }
 
     public function demande_login()
