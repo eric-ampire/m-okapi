@@ -34,9 +34,35 @@ body {
 <a href="<?php echo site_url('utilisateur/parametre'); ?>">annuler</a>
 <h2>Modifier la clé</h2>
 <p>
-    <form method="post" action="<?php echo site_url('utilisateur/update_mdp') ?>" >
-        Mot de passe :
-        <input type="password" name="mdp" /></br>
-        <input type="submit" value="modifier" />
+    <?php echo form_open("utilisateur/update_mdp")?>
+        <table>
+            <tr>
+                <td>Ancien Mot de passe :</td>
+                <td><input type="password" name="old_mdp" required/></br></td>
+                <td><?php echo form_error('old_mdp'); ?></td>
+            </tr>
+
+            <tr>
+                <td>Nouveau mot de passe :</td>
+                <td><input type="password" name="new_mdp" required/></br></td>
+                <td><?php echo form_error('new_mdp'); ?></td>
+            </tr>
+
+            <tr>
+                <td>Ancien Mot de passe :</td>
+                <td><input type="password" name="confirm_mdp" required/></br></td>
+                <td><?php echo form_error('confirm_mdp'); ?></td>
+
+            </tr>
+
+            <tr>
+                <td><input type="submit" value="modifier" /></td>
+            </tr>
+
+        </table>
+        <p><?php if (isset($password_error)) echo $password_error; ?></p>
+        <p><?php if (isset($password_error_error)) echo $password_error_error; ?></p>
     </form>
 </p>
+
+
