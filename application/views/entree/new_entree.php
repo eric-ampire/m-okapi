@@ -33,13 +33,13 @@ body {
 
 <h3>Nouvelle categorie d'entree</h3>
 
-<form method="post" action="<?php echo site_url('utilisateur/nouvelle_categorie_entree'); ?>">
+<form method="post" action="<?php echo site_url('utilisateur/nouvelle_entree'); ?>">
     Nom categorie:
-    <input type="text" name="nom" /></br>
+    <input type="text" name="nom" required/></br>
     Montant :
-    <input type="text" name="montant" /></br>
+    <input type="text" name="montant" required/></br>
     Date entree :
-    <input type="date" name="dtcreation" /></br>
+    <input type="date" name="dtcreation" required/></br>
     <input type="submit" value="Enregistrer" /></br>
 
 </form>
