@@ -79,8 +79,11 @@ class Utilisateur extends CI_Controller
             $d = array(
                 'error_login' => 'Login ou mot de passe incorrect'
             );
+            
             $this->session->set_flashdata($d);
-            $this->form_authentification();
+            $form_auth = $this->load->view('utilisateur/form_authentification', [], true);
+            $d = array('page' => $form_auth);
+            $this->load->view('mokapi_home', $d);
         }
     }
 

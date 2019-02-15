@@ -45,8 +45,8 @@ body {
         <p>
             <em>Votre gestionnaire de budget optimisé</em>
         </p>
+        <?php echo $page ?>
         <p>
-            <a href="<?php echo site_url('utilisateur/form_authentification') ?>">Se connecter</a><br/>
             <a href="<?php echo site_url('utilisateur/form_inscription') ?>">Créer un compte</a>
         </p>
     </body>
